@@ -6,6 +6,7 @@ This API is used for assigning device to customer and sending notifications.
 - [NestJS](https://github.com/nestjs/nest) framework. It provides a great way to build Node JS app
 - TypeScript
 - Firebase
+- Mongo
 - Tesing by using: 
     - SuperTest
     - Jest
