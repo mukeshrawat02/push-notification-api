@@ -3,10 +3,14 @@
   "version": "1.0.0",
   "description": "Rest api for sending device notification and registration.",
   "main": "server.js",
-  "scripts": {},
+  "scripts": {
+    "build": "node_modules/.bin/tsc",
+    "dev": "ts-node ./src/main.ts",
+    "start": "node ./dist/src/main.js"
+  },
   "keywords": [],
   "author": "Mukesh Rawat",
-  "license": "GNU",
+  "license": "GPL",
   "dependencies": {
     "@nestjs/common": "^5.1.0",
     "@nestjs/core": "^5.1.0",
