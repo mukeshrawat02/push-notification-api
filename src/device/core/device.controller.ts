@@ -1,5 +1,6 @@
 
 import { Get, Post, Body, Req, Res, Controller, Param, Put, Logger } from '@nestjs/common';
+import { CreateDeviceDto } from './create-device.dto';
 
 @Controller('device')
 export class DeviceController {
@@ -16,7 +17,12 @@ export class DeviceController {
     }
 
     @Put('/:projectId/:customerId')
-    async createDevice(@Req() request, @Res() response, @Param('projectId') projectId, @Param('customerId') customerId): Promise<any> {
+    async createDevice(
+        @Res() response,
+        @Param('projectId') projectId,
+        @Param('customerId') customerId,
+        @Body() body: CreateDeviceDto
+        ): Promise<any> {
         try {
             return response.send({ status: 'success', message: `Device for '${projectId}' added successfully!` });
         }
