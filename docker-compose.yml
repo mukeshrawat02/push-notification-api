@@ -1,0 +1,26 @@
+version: '3'
+services:
+  notification:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart : always
+    image: notification_api:local
+    container_name: notification_api_container
+    environment:
+      - PORT=3000
+      - MONGO_URL=mongodb://mongo:27017/notification
+    ports:
+      - 3000:3000
+    links:
+      - mongo
+    volumes:
+      - ./:/notification_api
+  mongo:
+    image: mongo:latest
+    container_name: mongodb
+    restart: on-failure
+    volumes:
+      - ${PWD}/mongo:/data/db
+    ports: 
+      - 27017:27017
