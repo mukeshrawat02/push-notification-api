@@ -4,57 +4,57 @@ import { INestApplication } from '@nestjs/common';
 import { getModelToken } from '@nestjs/mongoose';
 
 import { DeviceModule } from '../../src/device/device.module';
-import { DeviceService } from '../../src/device/core/device.service';
-import { ApplicationModule } from '../../src/app.module';
+import { MessagingService } from '../../src/message/messaging.service';
+import { Message } from '../../src/message/message';
 
 describe('Device (e2e)', () => {
     let app: INestApplication;
-    let token: string;
-
     const mockRepository = {
-        findOne() { },
-        find() { },
-        save() { },
-        deleteMany() { },
+        findOne(conditions?: any) {
+            return {
+                exec: () => Promise.resolve({
+                    customerId: '1',
+                    projectId: 'notification_1',
+                    token: 'banana:token'
+                }),
+            };
+        },
+        find(conditions?: any) {
+            return {
+                exec: () => Promise.resolve([{
+                    customerId: '1',
+                    projectId: 'notification_1',
+                    token: 'banana:token'
+                },
+                {
+                    customerId: '2',
+                    projectId: 'notification_2',
+                    token: 'apple:token'
+                }]),
+            };
+        },
+        create(...docs: any[]) {
+            return Promise.resolve({});
+        },
+        deleteOne(conditions: any) {
+            return {
+                exec: () => Promise.resolve({}),
+            };
+        },
     };
 
-    const mockDeviceService = {
-        getDevice() {
-            return Promise.resolve({
-                customerId: '1',
-                projectId: 'notification_1',
-                token: 'banana:token'
-            });
-        },
-        getDevices() {
-            return Promise.resolve([{
-                customerId: '1',
-                projectId: 'notification_1',
-                token: 'banana:token'
-            }, {
-                customerId: '2',
-                projectId: 'notification_2',
-                token: 'apple:token'
-            }]);
-        },
-        saveDevice(data) {
-            return Promise.resolve({
-                customerId: '1',
-                projectId: 'notification_1',
-                token: 'banana:token'
-            });
-        },
-        deleteDevice(data) {
-            return Promise.resolve(true);
-        },
-    };
+    const mockMessagingService = {
+        sendNotification(projectId: string, token: string, notification: Message): Promise<any> {
+            return Promise.resolve({ data: 'notification_sent', token: 'banana:token' });
+        }
+    }
 
     beforeAll(async () => {
         const moduleFixture = await Test.createTestingModule({
             imports: [DeviceModule],
         })
-            .overrideProvider(DeviceService)
-            .useValue(mockDeviceService)
+            .overrideProvider(MessagingService)
+            .useValue(mockMessagingService)
             .overrideProvider(getModelToken('devices'))
             .useValue(mockRepository)
             .compile();
