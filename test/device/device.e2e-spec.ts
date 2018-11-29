@@ -5,6 +5,7 @@ import { getModelToken } from '@nestjs/mongoose';
 
 import { DeviceModule } from '../../src/device/device.module';
 import { DeviceService } from '../../src/device/core/device.service';
+import { ApplicationModule } from '../../src/app.module';
 
 describe('Device (e2e)', () => {
     let app: INestApplication;
@@ -64,7 +65,7 @@ describe('Device (e2e)', () => {
 
     it('/:projectId/:customerId (PUT)', async () => {
         const result = await request(app.getHttpServer())
-            .put('/notification_1/1')
+            .put('/device/notification_1/1')
             .set('Accept', 'application/json');
 
         expect(result.status).toEqual(200);
