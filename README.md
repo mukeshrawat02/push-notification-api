@@ -7,7 +7,7 @@ This API is used for assigning device to customer and sending notifications.
 - TypeScript
 - Firebase
 - Mongo
-- Tesing by using: 
+- Testing by using: 
     - SuperTest
     - Jest
     - Nock
