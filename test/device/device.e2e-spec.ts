@@ -63,6 +63,25 @@ describe('Device (e2e)', () => {
         await app.init();
     });
 
+    it('/device (GET)', async () => {
+        const expected = {
+            customerId: '1',
+            projectId: 'notification_1',
+            token: 'banana:token'
+        };
+
+        const result = await request(app.getHttpServer())
+            .get('/device')
+            .set('Accept', 'application/json');
+
+        expect(result.status).toEqual(200);
+        expect(result.body).toEqual(
+            expect.arrayContaining([
+                expect.objectContaining(expected),
+            ]),
+        );
+    });
+
     it('/:projectId/:customerId (PUT)', async () => {
         const result = await request(app.getHttpServer())
             .put('/device/notification_1/1')
@@ -75,6 +94,16 @@ describe('Device (e2e)', () => {
         });
     });
 
+    it('/:projectId/:customerId/messages (POST)', async () => {
+        const result = await request(app.getHttpServer())
+            .post('/device/notification_1/1/messages')
+            .set('Accept', 'application/json');
+
+        expect(result.status).toEqual(200);
+        expect(result.body).toEqual({
+            message: 'Notification sent',
+        });
+    });
 
     afterAll(async () => {
         await app.close();
