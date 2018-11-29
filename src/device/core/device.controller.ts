@@ -5,11 +5,13 @@ import { ApiUseTags } from '@nestjs/swagger';
 import { CreateDeviceDto } from './create-device.dto';
 import { DeviceService } from './device.service';
 import { IDevice } from './device.interface';
+import { MessagingService } from '../../message/messaging.service';
+import { Message } from '../../message/message';
 
 @Controller('device')
 @ApiUseTags('notification')
 export class DeviceController {
-    constructor(private readonly _deviceService: DeviceService, private readonly _loggerService: Logger) { }
+    constructor(private readonly _deviceService: DeviceService, private readonly _messagingService: MessagingService, private readonly _loggerService: Logger) { }
 
     @Get()
     async getDevices(@Res() response): Promise<any> {
@@ -49,9 +51,20 @@ export class DeviceController {
     }
 
     @Post('/:projectId/:customerId/messages')
-    async sendNotification(@Req() request, @Res() response, @Param('projectId') projectId: string, @Param('customerId') customerId: string): Promise<any> {
+    async sendNotification(
+        @Res() response,
+        @Param('projectId') projectId: string,
+        @Param('customerId') customerId: string,
+        @Body() message: Message): Promise<any> {
         try {
-            return response.send({ message: 'Notification sent' });
+            const device: IDevice = await this._deviceService.getDevice(projectId, customerId);
+            if (device) {
+                const fcmToken: string = device.token;
+                const data = await this._messagingService.sendNotification(projectId, fcmToken, message);
+                return response.send(data);
+            }
+            throw new Error('Unprocessable Entity');
+
         }
         catch (err) {
             this._loggerService.error(err);

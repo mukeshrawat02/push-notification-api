@@ -5,6 +5,9 @@ import { getModelToken } from '@nestjs/mongoose';
 import { DeviceController } from './device.controller';
 import { DeviceService } from './device.service';
 import { CreateDeviceDto } from './create-device.dto';
+import { MessagingModule } from '../../message/messaging.module';
+import { MessagingService } from '../../message/messaging.service';
+import { Message } from '../../message/message';
 
 let mockRepository = {
     findOne(conditions?: any) {
@@ -40,6 +43,12 @@ let mockRepository = {
     },
 };
 
+const mockMessagingService = {
+    sendNotification(projectId: string, token: string, notification: Message): Promise<any> {
+        return Promise.resolve({ data: 'notification_sent', token: 'banana:token' });
+    }
+}
+
 describe('DeviceController', () => {
     let deviceController: DeviceController;
     let deviceService: DeviceService;
@@ -64,9 +73,12 @@ describe('DeviceController', () => {
 
     const initializeModule = async () => {
         const module = await Test.createTestingModule({
+            imports: [MessagingModule],
             controllers: [DeviceController],
             providers: [Logger, DeviceService],
         })
+            .overrideProvider(MessagingService)
+            .useValue(mockMessagingService)
             .overrideProvider(getModelToken('devices'))
             .useValue(mockRepository)
             .compile();

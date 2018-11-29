@@ -101,9 +101,7 @@ describe('Device (e2e)', () => {
             .set('Accept', 'application/json');
 
         expect(result.status).toEqual(200);
-        expect(result.body).toEqual({
-            message: 'Notification sent',
-        });
+        expect(result.body).toEqual({ data: 'notification_sent', token: 'banana:token' });
     });
 
     afterAll(async () => {
