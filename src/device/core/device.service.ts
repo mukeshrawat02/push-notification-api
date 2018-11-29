@@ -34,7 +34,7 @@ export class DeviceService extends BaseDataService {
             } catch (error) {
                 return this.throwInternalServerError(error);
             }
-        }
+        } 
         return this.throwUnProcessableEntity();
     }
 
