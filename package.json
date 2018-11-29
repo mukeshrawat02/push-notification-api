@@ -6,7 +6,25 @@
   "scripts": {
     "build": "node_modules/.bin/tsc",
     "dev": "ts-node ./src/main.ts",
-    "start": "node ./dist/main.js"
+    "start": "node ./dist/main.js",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:cov": "jest --coverage",
+    "test:e2e": "jest --detectOpenHandles --forceExit --config  ./test/jest-e2e.json"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "rootDir": "src",
+    "testRegex": ".spec.ts$",
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "coverageDirectory": "../coverage",
+    "testEnvironment": "node"
   },
   "keywords": [],
   "author": "Mukesh Rawat",
