@@ -6,7 +6,7 @@
   "scripts": {
     "build": "node_modules/.bin/tsc",
     "dev": "ts-node ./src/main.ts",
-    "start": "node ./dist/src/main.js"
+    "start": "node ./dist/main.js"
   },
   "keywords": [],
   "author": "Mukesh Rawat",
@@ -19,6 +19,7 @@
     "@nestjs/swagger": "^2.5.1",
     "@types/es6-promise": "^3.3.0",
     "body-parser": "^1.18.3",
+    "express": "^4.16.4",
     "firebase-admin": "^6.0.0",
     "fs": "0.0.1-security",
     "http-errors": "^1.7.0",

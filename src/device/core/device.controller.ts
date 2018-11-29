@@ -1,8 +1,11 @@
 
 import { Get, Post, Body, Req, Res, Controller, Param, Put, Logger } from '@nestjs/common';
+import { ApiUseTags } from '@nestjs/swagger';
+
 import { CreateDeviceDto } from './create-device.dto';
 
 @Controller('device')
+@ApiUseTags('notification')
 export class DeviceController {
     constructor(private readonly _loggerService: Logger) { }
 
@@ -19,8 +22,8 @@ export class DeviceController {
     @Put('/:projectId/:customerId')
     async createDevice(
         @Res() response,
-        @Param('projectId') projectId,
-        @Param('customerId') customerId,
+        @Param('projectId') projectId: string,
+        @Param('customerId') customerId: string,
         @Body() body: CreateDeviceDto
         ): Promise<any> {
         try {
@@ -32,7 +35,7 @@ export class DeviceController {
     }
 
     @Post('/:projectId/:customerId/messages')
-    async sendNotification(@Req() request, @Res() response, @Param('projectId') projectId, @Param('customerId') customerId): Promise<any> {
+    async sendNotification(@Req() request, @Res() response, @Param('projectId') projectId: string, @Param('customerId') customerId: string): Promise<any> {
         try {
             return response.status(200).send('message');
         }
