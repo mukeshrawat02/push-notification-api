@@ -85,6 +85,7 @@ describe('Device (e2e)', () => {
     it('/:projectId/:customerId (PUT)', async () => {
         const result = await request(app.getHttpServer())
             .put('/device/notification_1/1')
+            .send({ fcmToken: 'banana:token' })
             .set('Accept', 'application/json');
 
         expect(result.status).toEqual(200);

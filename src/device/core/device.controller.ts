@@ -30,14 +30,18 @@ export class DeviceController {
         @Body() body: CreateDeviceDto
     ): Promise<any> {
         try {
-            const deviceObj = {
-                projectId,
-                customerId,
-                token: body.fcmToken,
-            } as IDevice;
+            const fcmToken = body.fcmToken;
+            if (fcmToken) {
+                const deviceObj = {
+                    projectId,
+                    customerId,
+                    token: fcmToken,
+                } as IDevice;
 
-            const result = await this._deviceService.saveDevice(deviceObj);
-            return response.send({ status: 'success', message: `Device for '${projectId}' added successfully!` });
+                const result = await this._deviceService.saveDevice(deviceObj);
+                return response.send({ status: 'success', message: `Device for '${projectId}' added successfully!` });
+            }
+            throw new Error('Unprocessable Entity');
         }
         catch (err) {
             return response.send(err);
