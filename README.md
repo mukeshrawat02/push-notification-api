@@ -1,7 +1,9 @@
+[![NestJS](https://img.shields.io/badge/Powered%20by-NestJS-blue.svg?colorB=0e83cd)](https://nestjs.com/)
+
 # Push Notification API
 This API is used for assigning device to customer and sending notifications.
 
-# Technical bits used
+# Technology stack
 - Node JS
 - [NestJS](https://github.com/nestjs/nest) framework. It provides a great way to build Node JS app
 - TypeScript
