@@ -1,7 +1,7 @@
 import { Injectable, HttpService } from '@nestjs/common';
 
 import { FireBase } from './core/firebase';
-import { Message } from './message';
+import { MessageDto } from './message.dto';
 
 @Injectable()
 export class MessagingService {
@@ -9,7 +9,7 @@ export class MessagingService {
         this._firebase.configure();
     }
     
-    async sendNotification(projectId: string, token: string, notification: Message): Promise<any> {
+    async sendNotification(projectId: string, token: string, notification: MessageDto): Promise<any> {
         try {
             return await this._firebase.sendNotification(projectId, token, notification);
         } catch (err) {

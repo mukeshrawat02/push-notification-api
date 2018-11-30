@@ -40,3 +40,6 @@ npm run test:e2e   # Run end to end test flow
 # Swagger UI
 Swagger is active by default so when server is up you can see the API definition on 
 `http://localhost:3000/api`
+
+![Alt text](/src/assets/swagger.PNG?raw=true "Swagger")
+

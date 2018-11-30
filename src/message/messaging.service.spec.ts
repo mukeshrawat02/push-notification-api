@@ -17,7 +17,7 @@ jest.mock('firebase-admin', () => {
 });
 
 import { MessagingService } from './messaging.service';
-import { Message } from './message';
+import { MessageDto } from './message.dto';
 import { FireBase } from './core/firebase';
 
 describe('MessagingService', () => {
@@ -40,7 +40,7 @@ describe('MessagingService', () => {
 
   describe('sendNotification()', () => {
     const token = 'banana:token';
-    const notification: Message = {
+    const notification: MessageDto = {
       data: {
         message: 'notification_sent',
       },

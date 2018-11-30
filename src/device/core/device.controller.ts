@@ -6,7 +6,7 @@ import { CreateDeviceDto } from './create-device.dto';
 import { DeviceService } from './device.service';
 import { IDevice } from './device.interface';
 import { MessagingService } from '../../message/messaging.service';
-import { Message } from '../../message/message';
+import { MessageDto } from '../../message/message.dto';
 
 @Controller('device')
 @ApiUseTags('notification')
@@ -55,7 +55,7 @@ export class DeviceController {
         @Res() response,
         @Param('projectId') projectId: string,
         @Param('customerId') customerId: string,
-        @Body() message: Message): Promise<any> {
+        @Body() message: MessageDto): Promise<any> {
         try {
             const device: IDevice = await this._deviceService.getDevice(projectId, customerId);
             if (device) {
