@@ -34,6 +34,7 @@ npm run test:cov   # Generate test coverage report
 npm run test:e2e   # Run end to end test flow
 ```
 > The API will run on default `3000` port which can be change in `\src\main.ts`
+> For make this working please add your firebase configuration in `\config\firebase-configuration.ts` 
 
 
 # Swagger UI
